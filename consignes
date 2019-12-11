@@ -1,9 +1,19 @@
 requete sql à réaliser dans phpmyadmin (utiliser "MOCK-DATA.zip")
 1) Afficher tous les gens dont le nom est palmer
+SELECT * FROM `TABLE 2` WHERE last_name='palmer';
+
 2) Afficher toutes les femmes
+SELECT * FROM `TABLE 2` WHERE gender='Female';
+
 3) Tous les états dont la lettre commence par N
+SELECT * FROM `TABLE 2` WHERE country_code LIKE 'N%';
+
 4) Tous les emails qui contiennent google
+SELECT * FROM `TABLE 2` WHERE email LIKE '%google%';
+
 5) Répartition par Etat et le nombre d’enregistrement par état (croissant)
+SELECT * FROM contact WHERE NOT state_code = '' ORDER BY `contact`.`state_code` ASC ??
+
 6) Insérer un utilisateur, lui mettre à jour son adresse mail puis supprimer l’utilisateur.
 7) Nombre de femme et d’homme
 8) Afficher Age de chaque personne, puis la moyenne d’âge des femmes et des hommes
