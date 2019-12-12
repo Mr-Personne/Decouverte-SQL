@@ -13,10 +13,55 @@ SELECT * FROM `TABLE 2` WHERE email LIKE '%google%';
 
 5) Répartition par Etat et le nombre d’enregistrement par état (croissant)
 SELECT * FROM contact WHERE NOT state_code = '' ORDER BY `contact`.`state_code` ASC ??
+or??
+SELECT COUNT(country_code), country_code FROM contact GROUP BY country_code ORDER BY COUNT(country_code) ASC ?!
+((I think it's the last one...))
+
 
 6) Insérer un utilisateur, lui mettre à jour son adresse mail puis supprimer l’utilisateur.
+INSERT INTO contact (first_name, last_name, email, gender, ip_address, birth_date, zip_code, avatar_url, state_code, country_code)
+VALUES ('Test', 'Testeur', 'test@me.me', 'lol', '', '', 'vkhjgbj;464', '', '', '')
+
+then...
+UPDATE `contact` SET `email` = 'test@gmail.com' WHERE `contact`.`id` = 1001;
+
+then...
+DELETE FROM `contact` WHERE `contact`.`id` = 1002
+
+
 7) Nombre de femme et d’homme
+SELECT COUNT(gender), gender FROM contact GROUP BY gender
+
+
 8) Afficher Age de chaque personne, puis la moyenne d’âge des femmes et des hommes
+SELECT FLOOR(DATEDIFF('2015/01/01', '2014/01/01')/365) AS DateDiff
+//('fonction' datediff retourne difference en jour des deux dates données; ex en haut retournera 365)
+//(donc, pour savoir le nombre d'années, on peut diviser le résultat par 365 et mettre tous ça dans une fonction FLOOR)
+//(la fonction FLOOR arondit le chiffre (vu que le calcule retourne un chiffre a virgule))
+//(il reste maintenant à remplacer les deux dates au dessus par ceux de la database)
+
+SELECT FLOOR(DATEDIFF(CURRENT_DATE, '1992/01/01')/365) AS DateDiff
+//(CURRENT_DATE permet de récupérer la date d'aujourd'hui)
+
+(LA REPONSE EN DESSOUS)
+SELECT FLOOR(DATEDIFF(CURRENT_DATE, STR_TO_DATE(birth_date, '%d/%m/%Y'))/365) AS DateDiff, first_name FROM contact
+(STR_TO_DATE permet de convertir une date écrit en chaine de charactère en date utilisable pour faire la diff)
+('%d/%m/%Y' représente le format de la date. le d minuscule représente une date écrit avec deux chiffres)
+(et le D maj représente une date écrit avec 1st, 2nd, 3rd, ... etc... il faut aussi penser à ajouter les '/')
+('AS DateDiff' a coté du calcul et avant la virgule pour lui donner un nom)
+(et 'FROM' pour préciser le tableau)
+
+
+
+
+----------------------------------------------------------------------------------------------------------------
+//(en dessous permet de créer une "fonction" qui pourra etre reactivé/utilisé en faisant EXEC 'nom fonction'????)
+CREATE PROCEDURE calcAge
+AS
+SELECT FLOOR(DATEDIFF('2015/01/01', '2014/01/01')/365) AS DateDiff
+GO;
+//(...enfin en principe oui...mais la ça marche pas)
+----------------------------------------------------------------------------------------------------------------
 
 Créer deux nouvelles tables, une qui contient l’ensemble des membres de l’ACS, l’autre qui contient les département avec numéros et nom écrit.
 9) Afficher le nom de chaque apprenant avec son département de résidence.
