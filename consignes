@@ -43,7 +43,7 @@ SELECT FLOOR(DATEDIFF('2015/01/01', '2014/01/01')/365) AS DateDiff
 SELECT FLOOR(DATEDIFF(CURRENT_DATE, '1992/01/01')/365) AS DateDiff
 //(CURRENT_DATE permet de récupérer la date d'aujourd'hui)
 
-(LA REPONSE EN DESSOUS)
+(Afficher Age de chaque personne LA REPONSE EN DESSOUS)
 SELECT FLOOR(DATEDIFF(CURRENT_DATE, STR_TO_DATE(birth_date, '%d/%m/%Y'))/365) AS DateDiff, first_name FROM contact
 (STR_TO_DATE permet de convertir une date écrit en chaine de charactère en date utilisable pour faire la diff)
 ('%d/%m/%Y' représente le format de la date. le d minuscule représente une date écrit avec deux chiffres)
@@ -51,6 +51,17 @@ SELECT FLOOR(DATEDIFF(CURRENT_DATE, STR_TO_DATE(birth_date, '%d/%m/%Y'))/365) AS
 ('AS DateDiff' a coté du calcul et avant la virgule pour lui donner un nom)
 (et 'FROM' pour préciser le tableau)
 
+
+SELECT FLOOR(AVG(FLOOR(DATEDIFF(CURRENT_DATE, STR_TO_DATE(birth_date, '%d/%m/%Y'))/365))) AS Moyenne, gender FROM contact GROUP BY gender
+
+(puis la moyenne d’âge des femmes et des hommes (en propre))
+SELECT FLOOR(
+    AVG(
+        FLOOR(
+            DATEDIFF(CURRENT_DATE, STR_TO_DATE(birth_date, '%d/%m/%Y'))/365
+        )
+    )
+) AS Moyenne, gender FROM contact GROUP BY gender
 
 
 
@@ -66,3 +77,4 @@ GO;
 Créer deux nouvelles tables, une qui contient l’ensemble des membres de l’ACS, l’autre qui contient les département avec numéros et nom écrit.
 9) Afficher le nom de chaque apprenant avec son département de résidence.
 10) Afficher le résultat du 9) dans une page php (utiliser PDO pour la connexion)
+('php -i | grep -i pdo' affiche dans console si pdo est active)
