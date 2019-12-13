@@ -76,5 +76,9 @@ GO;
 
 Créer deux nouvelles tables, une qui contient l’ensemble des membres de l’ACS, l’autre qui contient les département avec numéros et nom écrit.
 9) Afficher le nom de chaque apprenant avec son département de résidence.
+SELECT membres_promo.first_name, departements.depName FROM `membres_promo`
+INNER JOIN departements ON departements.depCode = membres_promo.zip_code;
+
+
 10) Afficher le résultat du 9) dans une page php (utiliser PDO pour la connexion)
 ('php -i | grep -i pdo' affiche dans console si pdo est active)
